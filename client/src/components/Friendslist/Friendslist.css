@@ -1,3 +1,7 @@
+.addFriendButton {
+  margin-bottom: 50px;
+}
+
 .list-overflow-container {
   max-height: 545px;
   border: 1px #DDDDDD solid;
@@ -31,3 +35,12 @@
 .list-overflow-container li:last-child {
   border-bottom: none;
 }
+
+.delete{
+  background-color:red;
+}
+
+.add{
+  background-color:green;
+}
+

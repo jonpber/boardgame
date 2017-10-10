@@ -13,17 +13,34 @@ app.use(express.static("client/build"));
 // Add routes, both API and view
 app.use(routes);
 
+
 // Set up promises with mongoose
 mongoose.Promise = global.Promise;
 // Connect to the Mongo DB
 mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist",
+  'mongodb://heroku_6ftxqjz7:begnvtgplfhq2bij765641mp6o@ds161164.mlab.com:61164/heroku_6ftxqjz7' ||
+  "mongodb://localhost/boardgame",
   {
     useMongoClient: true
   }
 );
-
 // Start the API server
-app.listen(PORT, function() {
+const server = app.listen(PORT, function() {
   console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`);
 });
+
+const io = require('socket.io')(server);
+
+io.on("connection", socket => {
+	socket.on("notification", object => {
+		console.log("notification received")
+		console.log(object);
+	})
+
+});
+
+let socketExport = module.exports
+
+socketExport.updateUser = function(uid, valToUpdate){
+	io.emit(uid, valToUpdate);
+}
